@@ -1,2 +1,4 @@
 # Project exclude paths
-/target/
+/target/notes.txt
+*.txt
+notes.txt
