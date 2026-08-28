@@ -12,7 +12,7 @@ import java.awt.*;
 import com.example.decathlon.deca.*;
 
 
-public class MainGUI {
+public class DesktopUI {
 
     private JTextField nameField;
     private JTextField resultField;
@@ -20,7 +20,7 @@ public class MainGUI {
     private JTextArea outputArea;
 
     public static void main(String[] args) {
-        new MainGUI().createAndShowGUI();
+        new DesktopUI().createAndShowGUI();
     }
 
     private void createAndShowGUI() {
