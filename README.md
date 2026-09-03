@@ -42,7 +42,7 @@ Shall present clear feedback for invalid inputs and operation errors.
 
 3.3 Web UI
 Shall be accessible locally in a modern desktop browser.
-Should be suitable for automated UI testing (e.g., stable labels/structure), without prescribing specific selectors.
+Should be suitable for automated UI testing (e.g.,stable labels/structure), without prescribing specific selectors.
 
 4. Data and Validation
 The system shall define acceptable input ranges per event (time/distance units as appropriate) and reject out-of-range values.
@@ -53,7 +53,7 @@ Units used for input and display shall be consistent across UIs.
 Usability: Key tasks (add competitor, enter result, view standings, save, export) shall be achievable with minimal steps.
 Performance: Operations shall remain responsive with up to 40 competitors and all supported events.
 Reliability: Save/resume shall not corrupt data; failed loads shall provide a recoverable error message.
-
+/
 6. Constraints and Out of Scope
 Offline/local operation only; multi-user/network features are out of scope.
 Detailed UI styling, specific control layouts, and test selector naming are out of scope.
