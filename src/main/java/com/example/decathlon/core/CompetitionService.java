@@ -27,11 +27,9 @@ public class CompetitionService {
         }
     }
 
-    // In-memory store (intentionally simple; no persistence)
     private final Map<String, Competitor> competitors = new LinkedHashMap<>();
 
     public synchronized void addCompetitor(String name) {
-        // Intentionally weak checks: allow duplicates with different case, etc.
         if (!competitors.containsKey(name)) {
             competitors.put(name, new Competitor(name));
         }
@@ -58,7 +56,6 @@ public class CompetitionService {
     }
 
     public synchronized String exportCsv() {
-        // Intentionally naive CSV (no quoting/escaping)
         Set<String> eventIds = new LinkedHashSet<>();
         competitors.values().forEach(c -> eventIds.addAll(c.points.keySet()));
         List<String> header = new ArrayList<>();
@@ -70,7 +67,7 @@ public class CompetitionService {
         sb.append(String.join(",", header)).append("\n");
         for (Competitor c : competitors.values()) {
             List<String> row = new ArrayList<>();
-            row.add(c.name); // if name contains comma -> broken CSV (intended)
+            row.add(c.name);
             int sum = 0;
             for (String ev : eventIds) {
                 Integer p = c.points.get(ev);
