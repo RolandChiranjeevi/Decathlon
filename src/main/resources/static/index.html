@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Decathlon Web MVP</title>
     <style>
-    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-    .row { display: flex; gap: .5rem; align-items: center; margin-bottom: .5rem; flex-wrap: wrap; }
-    .card { border: 1px solid #ddd; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { border-bottom: 1px solid #eee; padding: .5rem; text-align: left; }
-    #error { color: #b00020; }
-  </style>
+        body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        .row { display: flex; gap: .5rem; align-items: center; margin-bottom: .5rem; flex-wrap: wrap; }
+        .card { border: 1px solid #ddd; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border-bottom: 1px solid #eee; padding: .5rem; text-align: left; }
+        #error { color: #b00020; }
+    </style>
 </head>
 <body>
 <h1>Decathlon Web MVP</h1>
@@ -31,13 +31,13 @@
     <div class="row">
         <label for="name2">Name</label>
         <input id="name2" placeholder="same as above" />
-        <label for="event">Event</label>
-        <select id="event" data-testid="eventSelect">
-            <option value="100m">100m (s)</option>
-            <option value="longJump">Long Jump (cm)</option>
-            <option value="shotPut">Shot Put (m)</option>
-            <option value="400m">400m (s)</option>
+        <label for="discipline">Discipline</label>
+        <select id="discipline" data-testid="disciplineSelect">
+            <option value="decathlon">Decathlon</option>
+            <option value="heptathlon">Heptathlon</option>
         </select>
+        <label for="event">Event</label>
+        <select id="event" data-testid="eventSelect"></select>
         <label for="raw">Result</label>
         <input id="raw" data-testid="rawInput" type="number" step="0.01" />
         <button id="save" data-testid="saveScoreBtn">Save score</button>

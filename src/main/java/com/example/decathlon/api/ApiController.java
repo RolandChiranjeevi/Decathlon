@@ -19,14 +19,11 @@ public class ApiController {
     public ResponseEntity<?> add(@RequestBody Map<String,String> body) {
         String name = Optional.ofNullable(body.get("name")).orElse("").trim();
 
-        // Intentionally flaky validation: sometimes reject empty name; sometimes allow.
-        if (name.isEmpty() && Math.random() < 0.15) {
-            return ResponseEntity.badRequest().body("Empty name");
+        if (!name.matches(".*[A-Za-zÅÄÖåäö].*")) {
+            return ResponseEntity.badRequest().body("Name must contain valid letters");
         }
 
-        // Soft cap at 40 only here (service doesn't enforce) -> can exceed via alternate flows.
-        // Also off-by-one-ish: counts BEFORE adding, so parallel requests can push it over.
-        if (getCount() >= 40 && Math.random() < 0.9) {
+        if (getCount() >= 40) {
             return ResponseEntity.status(429).body("Too many competitors");
         }
 

@@ -2,12 +2,42 @@ const el = (id) => document.getElementById(id);
 const err = el('error');
 const msg = el('msg');
 
-// Intentionally inconsistent: we sometimes forget to clear error on success
-function setError(text) { err.textContent = text; }
-function setMsg(text) { msg.textContent = text; /* err.textContent not always cleared */ }
+function setError(text) { err.textContent = text; msg.textContent = ''; }
+function setMsg(text) { msg.textContent = text; err.textContent = ''; }
+
+const DECATHLON_EVENTS = [
+  ['100m', '100m (s)'],
+  ['110mHurdles', '110m Hurdles (s)'],
+  ['400m', '400m (s)'],
+  ['1500m', '1500m (s)'],
+  ['longJump', 'Long Jump (cm)'],
+  ['highJump', 'High Jump (cm)'],
+  ['poleVault', 'Pole Vault (cm)'],
+  ['shotPut', 'Shot Put (m)'],
+  ['discusThrow', 'Discus Throw (m)'],
+  ['javelinThrow', 'Javelin Throw (m)']
+];
+
+const HEPTATHLON_EVENTS = [
+  ['hep100mHurdles', '100m Hurdles (s)'],
+  ['hep200m', '200m (s)'],
+  ['hep800m', '800m (s)'],
+  ['hepLongJump', 'Long Jump (cm)'],
+  ['hepHighJump', 'High Jump (cm)'],
+  ['hepShotPut', 'Shot Put (m)'],
+  ['hepJavelinThrow', 'Javelin Throw (m)']
+];
+
+function populateEvents() {
+  const events = el('discipline').value === 'heptathlon' ? HEPTATHLON_EVENTS : DECATHLON_EVENTS;
+  el('event').innerHTML = events.map(([value, label]) => `<option value="${value}">${label}</option>`).join('');
+}
+
+el('discipline').addEventListener('change', populateEvents);
+populateEvents();
 
 el('add').addEventListener('click', async () => {
-  const name = el('name').value; // NOTE: no trim here (intentional)
+  const name = el('name').value;
   try {
     const res = await fetch('/api/competitors', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -18,7 +48,6 @@ el('add').addEventListener('click', async () => {
       setError(t || 'Failed to add competitor');
     } else {
       setMsg('Added');
-      // sometimes forget to clear error -> students can assert stale error
     }
     await renderStandings();
   } catch (e) {
@@ -45,7 +74,7 @@ el('save').addEventListener('click', async () => {
   }
 });
 
-let sortBroken = false; // becomes true after export -> sorting bug
+let sortBroken = false;
 
 el('export').addEventListener('click', async () => {
   try {
@@ -56,7 +85,7 @@ el('export').addEventListener('click', async () => {
     a.href = URL.createObjectURL(blob);
     a.download = 'results.csv';
     a.click();
-    sortBroken = true; // trigger sorting issue after export
+    sortBroken = true;
   } catch (e) {
     setError('Export failed');
   }
@@ -67,7 +96,6 @@ async function renderStandings() {
     const res = await fetch('/api/standings');
     const data = await res.json();
 
-    // Normally sort by total desc; but after export, we "forget" to sort
     const rows = (sortBroken ? data : data.sort((a,b)=> (b.total||0)-(a.total||0)))
       .map(r => `<tr>
         <td>${escapeHtml(r.name)}</td>
