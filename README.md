@@ -79,12 +79,12 @@ We use Jira to manage development tasks, testing activities, and defects.
 
 ###  Teacher Review
 
-Critical bugs requiring review are collected in the **`Critical Bugs To Staffan`** column on the active Jira board.
+Critical bugs requiring review are collected in the **`Assigned to developer`** column on the active Jira board.
 
 To review a bug:
 
 1. Open the [Jira Project Board](https://ducktales.atlassian.net/jira/software/projects/SCRUM/boards/1).
-2. Navigate to **`Critical Bugs To Staffan`**.
+2. Navigate to **`Assigned to developer`**.
 3. Open the relevant bug ticket.
 4. Review the available information, including:
 
@@ -93,6 +93,7 @@ To review a bug:
     * Actual result
     * Evidence and screenshots
    
+If a bug is lacking in information or is difficult to reproduce then the developer needs to comment on the ticket and move it back to the column **`New`**
 
 ---
 
