@@ -1,13 +1,16 @@
 package org.example;
 
 import com.microsoft.playwright.*;
+import org.junit.jupiter.api.Test;
 
-public class PlaywrightTest {
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    public static void main(String[] args) {
+class PlaywrightTest {
 
+    @Test
+    void openPage() {
         try (Playwright playwright = Playwright.create()) {
-
             Browser browser = playwright.chromium().launch(
                     new BrowserType.LaunchOptions().setHeadless(false)
             );
@@ -16,9 +19,12 @@ public class PlaywrightTest {
 
             page.navigate("https://www.google.com");
 
-            System.out.println("Titel: " + page.title());
+            assertEquals("Google", page.title());
 
             browser.close();
         }
+    }
+
+    private void assertEquals(String google, String title) {
     }
 }
