@@ -1,6 +1,6 @@
-package org.example;
+ package org.example;
 
-import com.microsoft.playwright.*;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.junit.jupiter.api.Test;
 
@@ -11,42 +11,27 @@ class ScoreEntryTest extends PlaywrightTestBase {
     @Test
     void addCompetitorAndSaveScore() {
 
-        try (Playwright playwright = Playwright.create()) {
+        page.navigate("http://localhost:8080/");
 
-            Browser browser = playwright.chromium().launch(
-                    new BrowserType.LaunchOptions()
-                            //.setHeadless(false)
-            );
+        // Add competitor
+        page.getByTestId("competitorNameInput").fill("Knatte");
+        page.getByTestId("addCompetitorBtn").click();
 
-            BrowserContext context = browser.newContext();
-            Page page = context.newPage();
+        // Enter competitor name
+        page.getByPlaceholder("same as above").fill("Knatte");
 
-            page.navigate("http://localhost:8080/");
+        // Enter score
+        page.getByTestId("rawInput").fill("14");
 
-            // Add competitor
-            page.getByTestId("competitorNameInput").fill("Knatte");
-            page.getByTestId("addCompetitorBtn").click();
+        // Save score
+        page.getByTestId("saveScoreBtn").click();
 
-            // Enter competitor name
-            page.getByPlaceholder("same as above").fill("Knatte");
-
-            // Enter score
-            page.getByTestId("rawInput").fill("14");
-
-            // Save score
-            page.getByTestId("saveScoreBtn").click();
-
-            // Assert that the score cell contains 312
-            assertThat(
-                    page.getByRole(
-                            AriaRole.CELL,
-                            new Page.GetByRoleOptions().setName("312")
-                    ).nth(1)
-            ).hasText("312");
-
-            browser.close();
-        }
+        // Assert that the score cell contains 312
+        assertThat(
+                page.getByRole(
+                        AriaRole.CELL,
+                        new Page.GetByRoleOptions().setName("312")
+                ).nth(1)
+        ).hasText("312");
     }
-
-
 }
