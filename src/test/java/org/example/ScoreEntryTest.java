@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-class ScoreEntryTest  {
+class ScoreEntryTest extends PlaywrightTestBase {
 
     @Test
     void addCompetitorAndSaveScore() {
@@ -15,7 +15,7 @@ class ScoreEntryTest  {
 
             Browser browser = playwright.chromium().launch(
                     new BrowserType.LaunchOptions()
-                            .setHeadless(false)
+                            //.setHeadless(false)
             );
 
             BrowserContext context = browser.newContext();
