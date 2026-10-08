@@ -59,6 +59,75 @@ Given a user has entered valid results
 When the user completes the required events
 Then the application should calculate the corresponding score
 ```
+### Playwright End-to-End Testing
+
+The project uses Playwright for Java with JUnit 5 for automated end-to-end testing.
+
+Before running the Playwright tests for the first time, install the required Playwright browsers through the terminal:
+
+mvn -Dexec.classpathScope=test exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install"
+
+Playwright tests are located under:
+
+src/test/java/org/example/
+
+├── PlaywrightTest.java
+
+└── PlaywrightTestBase.java
+
+PlaywrightTestBase contains the shared browser setup. Individual tests extend this class.
+For example: 
+```java
+package org.example;
+
+import com.microsoft.playwright.*;
+import org.junit.jupiter.api.Test;
+
+class PlaywrightTest extends PlaywrightTestBase {
+
+    @Test
+    void openPage() {
+        page.navigate("https://www.google.com");
+
+        System.out.println("Google " + page.title());
+    }
+}
+```
+
+Tests can be run locally from IntelliJ or with:
+mvn test
+
+The browser runs headed locally so developers can see the test execution.
+
+### Playwright Codegen
+
+Playwright Codegen can be used to record browser interactions and generate locators and test code.
+
+To run Code gen through the terminal use this:
+exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="codegen http://localhost:8080"
+
+Generated Codegen code should be reviewed and converted into proper JUnit tests with meaningful assertions.
+
+**Optional for convenience, will create a "Maven run configuration" in the top tool bar**
+
+*Create an IntelliJ Maven Run Configuration using(guide: https://www.jetbrains.com/help/idea/run-debug-configuration-maven.html)
+Command Line for Run in Maven configuration:
+```exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="codegen http://localhost:8080"```*
+
+### Automated Testing with GitHub Actions
+
+Playwright tests are also executed automatically through GitHub Actions. This is done for every push-request towards the repository.
+
+The workflow is located at:
+.github/workflows/playwright.yml
+
+The workflow starts the application, installs Playwright and runs:
+mvn test
+
+Tests run headless in GitHub Actions using:
+PLAYWRIGHT_HEADLESS=true
+
+This allows the same tests to run both locally and in the CI environment.
 
 ### Requirement Traceability
 
