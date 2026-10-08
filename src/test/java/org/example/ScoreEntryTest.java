@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-class ScoreEntryTestWebUI {
+class ScoreEntryTest extends PlaywrightTestBase {
 
     @Test
     void addCompetitorAndSaveScore() {
