@@ -1,26 +1,13 @@
 package org.example;
 
-import com.microsoft.playwright.*;
 import org.junit.jupiter.api.Test;
 
-
-
-class PlaywrightTest {
+class PlaywrightTest extends PlaywrightTestBase {
 
     @Test
     void openPage() {
-        try (Playwright playwright = Playwright.create()) {
-            Browser browser = playwright.chromium().launch(
-                    new BrowserType.LaunchOptions().setHeadless(false)
-            );
+        page.navigate("https://www.google.com");
 
-            Page page = browser.newPage();
-
-            page.navigate("https://www.google.com");
-
-            System.out.println("Google"+ page.title());
-
-            browser.close();
-        }
+        System.out.println("Google " + page.title());
     }
 }
