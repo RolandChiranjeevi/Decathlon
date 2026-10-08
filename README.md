@@ -103,16 +103,19 @@ The browser runs headed locally so developers can see the test execution.
 
 Playwright Codegen can be used to record browser interactions and generate locators and test code.
 
-To run Code gen through the terminal use this:
-exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="codegen http://localhost:8080"
+To create a "Maven run configuration" for opening Code Gen:
+- 1 Open Run → Edit Configurations...
+- 2 Click + and select Maven.
+- 3 Enter a name, for example: Playwright Codegen
+- 4 Make sure the Working directory is the project root directory, where pom.xml is located.
+- 5 Enter the following in the Command line field:
+```exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="codegen http://localhost:8080"```
+- 6 Click "Apply" and "OK"
+
+Select Playwright Codegen from the Run Configuration dropdown at the top of IntelliJ IDEA and click Run.
 
 Generated Codegen code should be reviewed and converted into proper JUnit tests with meaningful assertions.
 
-**Optional for convenience, will create a "Maven run configuration" in the top tool bar**
-
-*Create an IntelliJ Maven Run Configuration using(guide: https://www.jetbrains.com/help/idea/run-debug-configuration-maven.html)
-Command Line for Run in Maven configuration:
-```exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="codegen http://localhost:8080"```*
 
 ### Automated Testing with GitHub Actions
 
