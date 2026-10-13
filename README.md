@@ -99,6 +99,40 @@ mvn test
 
 The browser runs headed locally so developers can see the test execution.
 
+### Page Object Model
+
+Locators live in page objects under `src/test/java/org/example/pages/`, not in the tests. A test calls methods like `home.competitors().add(name)` and never contains selectors, so if the UI changes only the page object needs updating.
+
+```text
+src/test/java/org/example/
+├── pages/
+│   ├── BasePage.java            shared parent, holds the Playwright Page
+│   ├── HomePage.java            entry point, opens the app
+│   ├── AddCompetitorSection.java
+│   ├── ResultEntrySection.java
+│   └── StandingsSection.java
+├── data/
+│   ├── Discipline.java          decathlon / heptathlon
+│   └── Event.java               every event with its dropdown value
+├── utils/
+│   ├── Config.java              base URL (BASE_URL env var, default http://localhost:8080/)
+│   └── TestData.java            unique test data
+└── HomePageSmokeTest.java       example test using the page objects
+```
+
+Example:
+
+```java
+HomePage home = new HomePage(page).open();
+home.competitors().add("Anna");
+home.results().save("Anna", Event.RUN_100M, "14");
+assertThat(home.standings().totalFor("Anna")).hasText("312");
+```
+
+To add a new page object, extend `BasePage`, define the locators as fields and expose actions as methods. Prefer `data-testid` locators. Where an element has none, the page object falls back to its id and notes it in a comment.
+
+When the app gets a new event, add it to `Event`. Standings columns are found by their header text, so a new column only needs a constant in `StandingsSection.Column` (or call `cell(name, "Header")` directly).
+
 ### Playwright Codegen
 
 Playwright Codegen can be used to record browser interactions and generate locators and test code.
