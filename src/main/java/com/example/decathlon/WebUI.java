@@ -8,4 +8,5 @@ public class WebUI {
     public static void main(String[] args) {
         SpringApplication.run(WebUI.class, args);
     }
+
 }

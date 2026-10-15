@@ -11,7 +11,7 @@ public class ResultEntrySection extends BasePage {
     // The name field and the status message have no data-testid in index.html,
     // so for now they are found by id. Switch to test ids if the devs add them.
     private final Locator nameInput = byId("name2");
-    private final Locator message = byId("msg");
+    private final Locator message = byTestId("errorBanner");
 
     private final Locator disciplineSelect = byTestId("disciplineSelect");
     private final Locator eventSelect = byTestId("eventSelect");
