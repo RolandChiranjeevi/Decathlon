@@ -11,6 +11,7 @@ public class InvalidInputTest extends PlaywrightTestBase {
 
     private HomePage home;
 
+
     @BeforeEach
     void setUp() {
         home = new HomePage(page).open();
@@ -22,10 +23,13 @@ public class InvalidInputTest extends PlaywrightTestBase {
     @Test
     public void shouldShowErrorWhenEnteringInvalidCharacterInName() {
 
+
         home.competitors().add("?");
 
-        assertThat(home.results().message()).isVisible();
-        assertThat(home.results().message()).containsText("Name must contain valid letters");
+        assertThat(home.results().errorBanner()).isVisible();
+        assertThat(home.results().errorBanner()).containsText("Name must contain valid letters");
+
+
 
 
     }
@@ -37,8 +41,8 @@ public void shouldShowErrorWhenEnteringSpaceInName() {
 
         home.competitors().add(" ");
 
-        assertThat(home.results().message()).isVisible();
-        assertThat(home.results().message()).containsText("Name must contain valid letters");
+        assertThat(home.results().errorBanner()).isVisible();
+        assertThat(home.results().errorBanner()).containsText("Name must contain valid letters");
 }
 
 

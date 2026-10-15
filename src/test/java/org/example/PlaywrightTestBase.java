@@ -10,6 +10,7 @@ public abstract class PlaywrightTestBase {
     protected Browser browser;
     protected Page page;
 
+
     @BeforeEach
     void setUpPlaywright() {
         playwright = Playwright.create();
@@ -36,4 +37,6 @@ public abstract class PlaywrightTestBase {
             playwright.close();
         }
     }
+
+
 }
